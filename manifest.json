@@ -13,10 +13,10 @@
     "default_popup": "generic/popup/popup.html"
   },
 
-  "description": "The Profile V3 Enhancement Project.",
+  "description": "A simple browser extension enabling quality of life features for 42's intranet.",
 
   "icons": {
-    "42": "icons/42.png"
+    "32": "img/icon32.png"
   },
 
   "content_scripts": [
