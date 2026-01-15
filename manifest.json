@@ -1,37 +1,46 @@
 {
   "manifest_version": 2,
   "name": "BetterIntra",
-  "version": "1.0",
-
+  "description": "Quality of life features for 42's intranet.",
+  "version": "1.0.0",
   "permissions": [
     "storage",
-    "tabs",
-	  "https://*.intra.42.fr/*"
+    "https://*.intra.42.fr/*"
   ],
 
-  "browser_action": {
-    "default_popup": "generic/popup/popup.html"
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "betterintra@mpouillo",
+      "data_collection_permissions": {
+        "required": ["none"]
+      },
+      "strict_min_version": "58.0"
+    }
   },
-
-  "description": "A simple browser extension enabling quality of life features for 42's intranet.",
 
   "icons": {
     "32": "img/icon32.png"
   },
 
+  "browser_action": {
+    "default_icon": "img/icon32.png",
+    "default_title": "BetterIntra Settings",
+    "default_popup": "generic/popup/popup.html"
+  },
+
   "content_scripts": [
     {
-      "matches": ["*://*.intra.42.fr/*"],
-      "css": ["generic/style.css"],
-      "js": ["generic/lib/findAndReplaceDOMText.js", "generic/nicknamer.js"],
-      "run_at": "document_end"
+      "matches": [
+        "https://*.intra.42.fr/*"
+      ],
+      "js": [
+        "generic/lib/findAndReplaceDOMText.js",
+        "generic/storage-helper.js",
+        "generic/nicknamer.js"],
+      "css": [
+        "generic/style.css"
+      ],
+      "run_at": "document_start"
     }
-  ],
-
-  "browser_specific_settings": {
-  "gecko": {
-    "id": "betterintra@mpouillo",
-    "strict_min_version": "58.0"
-    }
-  }
+  ]
 }

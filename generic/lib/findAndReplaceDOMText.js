@@ -486,10 +486,7 @@
 			var wrapperClass = this.options.wrapClass;
 
 			if (wrapper && wrapper.nodeType) {
-				// Wrapper has been provided as a stencil-node for us to clone:
-				var clone = doc.createElement('div');
-				clone.innerHTML = wrapper.outerHTML || new XMLSerializer().serializeToString(wrapper);
-				wrapper = clone.firstChild;
+				wrapper = wrapper.cloneNode(true);
 			}
 
 			if (typeof replacement == 'function') {
