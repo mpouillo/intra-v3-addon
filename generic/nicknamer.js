@@ -57,21 +57,41 @@ async function displayNicknames() {
     });
 }
 
+function createProfileHeaderButton(text, offset) {
+    const profileHeaderTop = document.querySelector('.border.border-neutral-600.bg-ft-gray\\/50.relative');
+    const loginLocationBadge = document.querySelector('.absolute.top-2.right-4');
+    let button;
+
+    if (profileHeaderTop && loginLocationBadge) {
+        const loginLocationBadgeHeight = loginLocationBadge.offsetHeight;
+
+        button = document.createElement('div');
+        button.className = "reset-button absolute px-2 py-1 border rounded-full border-neutral-600 bg-ft-gray right-4";
+        button.style.display = 'none';
+        button.style.top = (loginLocationBadgeHeight + offset) + "px";
+
+        const flexWrapper = document.createElement('div');
+        flexWrapper.classList.add('text-sm', 'flex', 'flex-row', 'items-center', 'gap-1');
+
+        const textDiv = document.createElement('div');
+        textDiv.classList.add('drop-shadow-md');
+        textDiv.textContent = text;
+
+        flexWrapper.appendChild(textDiv);
+        button.appendChild(flexWrapper);
+        profileHeaderTop.appendChild(button);
+    }
+
+    return button;
+}
+
 async function updateProfileNameElement(profileNameElement, currentPageUserLogin) {
     const data = await DataStorage.getFeature('nicknamer');
     const nicknames = data.nicknames || {};
     const savedName = nicknames[currentPageUserLogin];
     const originalName = profileNameElement.textContent;
 
-    const container = document.createElement('div');
-    profileNameElement.parentNode.insertBefore(container, profileNameElement);
-    container.appendChild(profileNameElement);
-
-    const resetButton = document.createElement('span');
-    resetButton.textContent = 'Reset nickname';
-    resetButton.classList.add('reset-button');
-    resetButton.style.display = 'none';
-    container.appendChild(resetButton);
+    const resetButton = createProfileHeaderButton("Reset nickname", 16);
 
     console.log("Loading profile nickname for " + currentPageUserLogin);
     if (savedName) {
