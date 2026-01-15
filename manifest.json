@@ -36,7 +36,9 @@
       "js": [
         "generic/lib/findAndReplaceDOMText.js",
         "generic/storage-helper.js",
-        "generic/nicknamer.js"],
+        "generic/nicknamer.js",
+        "generic/custom-background.js"
+      ],
       "css": [
         "generic/style.css"
       ],

@@ -57,30 +57,20 @@ async function displayNicknames() {
     });
 }
 
-function createProfileHeaderButton(text, offset) {
-    const profileHeaderTop = document.querySelector('.border.border-neutral-600.bg-ft-gray\\/50.relative');
-    const loginLocationBadge = document.querySelector('.absolute.top-2.right-4');
-    let button;
+function createProfileHeaderButton(text, topOffset) {
+    const button = document.createElement('div');
+    button.className = "absolute px-2 py-1 border rounded-full border-neutral-600 bg-ft-gray right-4";
+    button.style.top = topOffset + "px";
 
-    if (profileHeaderTop && loginLocationBadge) {
-        const loginLocationBadgeHeight = loginLocationBadge.offsetHeight;
+    const flexWrapper = document.createElement('div');
+    flexWrapper.classList.add('text-sm', 'flex', 'flex-row', 'items-center', 'gap-1');
 
-        button = document.createElement('div');
-        button.className = "reset-button absolute px-2 py-1 border rounded-full border-neutral-600 bg-ft-gray right-4";
-        button.style.display = 'none';
-        button.style.top = (loginLocationBadgeHeight + offset) + "px";
+    const textDiv = document.createElement('div');
+    textDiv.classList.add('drop-shadow-md');
+    textDiv.textContent = text;
 
-        const flexWrapper = document.createElement('div');
-        flexWrapper.classList.add('text-sm', 'flex', 'flex-row', 'items-center', 'gap-1');
-
-        const textDiv = document.createElement('div');
-        textDiv.classList.add('drop-shadow-md');
-        textDiv.textContent = text;
-
-        flexWrapper.appendChild(textDiv);
-        button.appendChild(flexWrapper);
-        profileHeaderTop.appendChild(button);
-    }
+    flexWrapper.appendChild(textDiv);
+    button.appendChild(flexWrapper);
 
     return button;
 }
@@ -90,17 +80,30 @@ async function updateProfileNameElement(profileNameElement, currentPageUserLogin
     const nicknames = data.nicknames || {};
     const savedName = nicknames[currentPageUserLogin];
     const originalName = profileNameElement.textContent;
+    let resetButton = null;
 
-    const resetButton = createProfileHeaderButton("Reset nickname", 16);
+    // Reset button
+    const observer = new MutationObserver((mutations, obs) => {
+        const profileHeaderTop = document.querySelector('.border.border-neutral-600.bg-ft-gray\\/50.relative');
+        const loginLocationBadge = document.querySelector('.absolute.top-2.right-4');
 
-    console.log("Loading profile nickname for " + currentPageUserLogin);
-    if (savedName) {
-        profileNameElement.textContent = savedName;
-        resetButton.style.display = 'inline';
-        console.log("Profile nickname loaded: " + savedName);
-    } else {
-        resetButton.style.display = 'none';
-    }
+        if (profileHeaderTop && loginLocationBadge) {
+            obs.disconnect();
+            const offset = loginLocationBadge.offsetHeight + 16;
+            resetButton = createProfileHeaderButton("Reset nickname", offset);
+
+            resetButton.classList.add('reset-button');
+            resetButton.style.display = savedName ? 'inline' : 'none';
+            profileHeaderTop.appendChild(resetButton);
+            resetButton.addEventListener('click', async () => {
+                const data = await DataStorage.getFeature('nicknamer');
+                let nicknames = data.nicknames || {};
+                delete nicknames[currentPageUserLogin];
+                await DataStorage.updateSettings('nicknamer', { nicknames: nicknames });
+                window.location.reload();
+            });
+        }
+    });
 
     profileNameElement.contentEditable = true;
     profileNameElement.setAttribute('spellcheck', 'false');
@@ -129,21 +132,16 @@ async function updateProfileNameElement(profileNameElement, currentPageUserLogin
         displayNicknames();
     });
 
-    resetButton.addEventListener('click', async () => {
-        const data = await DataStorage.getFeature('nicknamer');
-        let nicknames = data.nicknames || {};
-
-        delete nicknames[currentPageUserLogin];
-        await DataStorage.updateSettings('nicknamer', { nicknames: nicknames });
-        window.location.reload();
-    });
-
     profileNameElement.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
             profileNameElement.blur();
         }
     });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  if (savedName) profileNameElement.textContent = savedName;
 }
 
 start();
