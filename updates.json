@@ -1,0 +1,13 @@
+{
+	"addons": {
+		"betterintra@mpouillo" : {
+			"updates": [
+				{
+					"version": "1.0.0",
+					"update_link": "https://github.com/mpouillo/BetterIntra/releases/download/1.0.0/betterintra-1.0.0.xpi",
+					"update_info_url": "https://github.com/mpouillo/BetterIntra/releases/tag/1.0.0"
+				}
+			]
+		}
+	}
+}
