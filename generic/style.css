@@ -33,7 +33,7 @@
 .button-group:hover .button-slide-reveal {
     opacity: 1;
 	pointer-events: auto;
-    transform: translateX(calc(var(--local-edit-width) * -0.9));
+    transform: translateX(calc((var(--local-edit-width) - .5rem) * -1));
     transition:
         transform 0.3s ease,
         opacity 0.3s ease,
@@ -65,8 +65,12 @@
 	transform: scale(1.1);
 }
 
-#nicknamer-edit-button, #custombg-edit-button {
+#nicknamer-edit-button, #custombg-upload-button {
 	z-index: 2;
+}
+
+#nicknamer-edit-button:hover {
+	color: #00ff6a
 }
 
 #nicknamer-reset-button:hover {
@@ -85,11 +89,28 @@
 	background-color: #1c6262;
 }
 
+#custombg-reset-button:hover {
+	color: #ff4848;
+}
+
+#custombg-reset-button:active {
+	background-color: #551212;
+}
+
 @keyframes flash-green {
 	0% { color: #00ff6a; }
 	100% { color: inherit; }
 }
 
+@keyframes flash-red {
+	0% { color: #ff4848; }
+	100% { color: inherit; }
+}
+
 .flash-save {
 	animation: flash-green 0.8s ease-out;
+}
+
+.flash-reset {
+	animation: flash-red 0.8s ease-out;
 }

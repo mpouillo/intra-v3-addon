@@ -32,7 +32,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.intra.42.fr/*"],
-      "js": ["generic/lib/findAndReplaceDOMText.js", "generic/storage.js", "generic/utils.js"],
+      "js": ["generic/storage.js", "generic/utils.js"],
       "css": ["generic/style.css"],
       "run_at": "document_start"
     },
