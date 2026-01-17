@@ -1,6 +1,2 @@
-- Refactor + Change behavior so that the script parses the page for login divs and tags them for easy use later, then another function edits the value they contain when it is run.
-- Add edit button for backgrounds
-- Change color of buttons
 - Add icons for all buttons
 - Style text zone BG the same as profile color (coalitions)
-- Make BGs only apply to users' own profile
