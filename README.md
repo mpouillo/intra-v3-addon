@@ -3,13 +3,12 @@
 Compatible with Intra V3.</p>
 
 ## Quick install
-[![Install for Firefox](https://img.shields.io/badge/Install%20for-Firefox-orange?style=for-the-badge&logo=firefox)](https://github.com/mpouillo/BetterIntra/releases/download/1.0.0/betterintra-1.0.0.xpi)
+[![Install for Firefox](https://img.shields.io/badge/Install%20for-Firefox-orange?style=for-the-badge&logo=firefox)](https://github.com/mpouillo/BetterIntra/releases/download/1.1.0/betterintra-1.1.0.xpi)
 
 ## Features
-- User nicknames
+- Custom user nicknames
+- Custom profile background
 
 Planned:
 - Monthly logtimes display
-- Custom profile background
 - Pin friends on your profile
-- Automatic updater
