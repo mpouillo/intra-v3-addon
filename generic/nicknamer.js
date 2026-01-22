@@ -208,7 +208,7 @@ const Nicknamer = {
 
 	async init() {
 		const data = await DataStorage.getFeature('nicknamer');
-		if (data.settings?.enabled === false) return;
+		if (data?.settings?.enabled === false) return;
 
         const nicknames = data.nicknames || {};
     
